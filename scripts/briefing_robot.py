@@ -43,7 +43,9 @@ import requests
 MADRID = ZoneInfo("Europe/Madrid")
 NOTION_VERSION = "2022-06-28"
 GEMINI_MODEL = os.environ.get("GEMINI_TTS_MODEL") or "gemini-3.8-flash-tts"
-GEMINI_VOICE = os.environ.get("GEMINI_VOICE") or "Iapetus"
+# "design:<name>" = a voice Gemini designs from our description (see DESIGNED_VOICES), created once and reused.
+GEMINI_VOICE = os.environ.get("GEMINI_VOICE") or "design:Butler, Received Pronunciation"
+FALLBACK_GEMINI_VOICE = "Iapetus"   # used if the designed voice can't be created
 GEMINI_STYLE = os.environ.get("GEMINI_STYLE") or ""  # Google advises testing with no style first
 EDGE_VOICE = os.environ.get("EDGE_VOICE") or "en-GB-RyanNeural"  # British backup voice
 MAX_CHUNK_WORDS = 1200         # ~7 minutes of speech per Gemini request (free tier = 10 requests/day)
@@ -52,11 +54,11 @@ PAUSE_BETWEEN_SECTIONS = 1.2   # seconds
 SAMPLE_RATE = 24000
 KEEP_EPISODES = 14             # older MP3s are deleted to keep the site small
 PODCAST_TITLE = os.environ.get("PODCAST_TITLE") or "Iván's Morning Briefing"
-# Days when the automatic (scheduled) runs must NOT voice the script; only a manual
-# "Run workflow" does. Used on 30 Oct 2026 to wait for Gemini's daily reset + voice choice.
-HOLD_SCHEDULED_ON = {"2026-10-30"}
+# One-off: on these dates scheduled runs wait until this Madrid time before voicing
+# (30 Oct 2026: Gemini's free daily quota resets at ~08:00 Madrid).
+HOLD_UNTIL = {"2026-10-30": "08:05"}
 # How the voice should say Iván's name. Empty = leave "Iván" as written.
-NAME_SPOKEN = os.environ.get("NAME_SPOKEN") or ""
+NAME_SPOKEN = os.environ.get("NAME_SPOKEN") or "Ee-bahn"   # Iván's pick (option C), 29 Oct 2026
 
 TEST_SCRIPT = [
     {"title": "Test", "paragraphs": [
@@ -309,11 +311,28 @@ def edge_chunk(text: str) -> bytes:
     return pcm
 
 
+def resolve_voice(voice: str) -> tuple[str, str]:
+    """Turn 'design:<name>' into a real Gemini voice ID. Returns (voice_id, label)."""
+    if not voice.startswith("design:"):
+        return voice, voice
+    name = voice.split(":", 1)[1]
+    prompt = dict(DESIGNED_VOICES).get(name)
+    vid = design_voice(name, prompt, existing_designed_voices()) if prompt else None
+    if vid:
+        return vid, f"{name} (designed)"
+    log(f"Designed voice '{name}' unavailable; using {FALLBACK_GEMINI_VOICE}")
+    return FALLBACK_GEMINI_VOICE, FALLBACK_GEMINI_VOICE
+
+
 def voice_all(chunks: list[dict]) -> tuple[bytes, str]:
     silence = lambda s: b"\x00\x00" * int(SAMPLE_RATE * s)
     engines = []
     if os.environ.get("GEMINI_API_KEY"):
-        engines.append(("Gemini " + GEMINI_VOICE, gemini_chunk))
+        try:
+            vid, label = resolve_voice(GEMINI_VOICE)
+            engines.append(("Gemini " + label, lambda text, _v=vid: gemini_chunk(text, voice=_v)))
+        except DailyQuotaUsed as e:
+            log(f"Skipping Gemini: {e}")
     engines.append(("Edge " + EDGE_VOICE, edge_chunk))
     last_error = None
     for name, fn in engines:
@@ -322,7 +341,7 @@ def voice_all(chunks: list[dict]) -> tuple[bytes, str]:
             for i, c in enumerate(chunks, 1):
                 log(f"{name}: piece {i}/{len(chunks)} ({len(c['text'].split())} words)")
                 pcm += fn(c["text"]) + silence(c["pause"])
-                if fn is gemini_chunk and i < len(chunks):
+                if name.startswith("Gemini") and i < len(chunks):
                     time.sleep(7)        # stay gentle with free-tier limits
             return pcm, name
         except Exception as e:           # whole episode falls back, so voices never mix
@@ -618,8 +637,9 @@ def main() -> None:
 
     if args.cmd == "check":
         today = dt.datetime.now(MADRID).date().isoformat()
-        if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and today in HOLD_SCHEDULED_ON:
-            log(f"{today} is on hold: waiting for a manual run.")
+        now_hm = dt.datetime.now(MADRID).strftime("%H:%M")
+        if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and now_hm < HOLD_UNTIL.get(today, "00:00"):
+            log(f"Holding until {HOLD_UNTIL[today]} Madrid today (Gemini daily reset).")
             gh_output(found="false")
             return
         page = find_ready_page()
