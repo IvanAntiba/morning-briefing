@@ -52,6 +52,8 @@ PAUSE_BETWEEN_SECTIONS = 1.2   # seconds
 SAMPLE_RATE = 24000
 KEEP_EPISODES = 14             # older MP3s are deleted to keep the site small
 PODCAST_TITLE = os.environ.get("PODCAST_TITLE") or "Iván's Morning Briefing"
+# How the voice should say Iván's name. Empty = leave "Iván" as written.
+NAME_SPOKEN = os.environ.get("NAME_SPOKEN") or ""
 
 TEST_SCRIPT = [
     {"title": "Test", "paragraphs": [
@@ -160,7 +162,15 @@ def parse_script(blocks: list[dict]) -> list[dict]:
     return [s for s in sections if s["paragraphs"]]
 
 
+def say_names(text: str) -> str:
+    """Swap names for spellings the voice pronounces correctly (audio only; Notion keeps the real spelling)."""
+    if NAME_SPOKEN:
+        text = re.sub(r"\bIv[aá]n\b", NAME_SPOKEN, text)
+    return text
+
+
 def clean_for_speech(text: str) -> str:
+    text = say_names(text)
     text = re.sub(r"https?://\S+", "", text)       # never read links aloud
     text = re.sub(r"[*_#`>|]+", "", text)            # stray markdown
     return re.sub(r"\s+", " ", text).strip()
@@ -417,7 +427,14 @@ AUDITION_TEXT = (
     "Markets were calm overnight. Mostly. "
     "I have three stories worth your attention, one of which is genuinely interesting, "
     "and I'll let you decide which. "
-    "I'd suggest finishing your warm-up first. I'll wait. I'm very good at waiting."
+    "I'd suggest finishing your warm-up first, Iván. I'll wait. I'm very good at waiting."
+)
+
+PRONUNCIATION_TEST = (
+    "Pronunciation test. Option A: Good morning, Iván. <short pause> "
+    "Option B: Good morning, Ee-vahn. <short pause> "
+    "Option C: Good morning, Ee-bahn. <short pause> "
+    "Option D: Good morning, Ivahn."
 )
 
 DESIGNED_VOICES = [
@@ -484,7 +501,7 @@ def audition(site: Path, repo_root: Path) -> None:
     for n, (label, vid) in enumerate(candidates, 1):
         try:
             log(f"Audition {n}: {label} ({vid})")
-            pcm = gemini_chunk(AUDITION_TEXT, voice=vid)
+            pcm = gemini_chunk(say_names(AUDITION_TEXT), voice=vid)
             add_episode(site, repo_root, pcm, f"Audition {n} — {label}",
                         f"Voice audition. Voice ID: {vid}", "audition", f"Gemini {vid}")
             results.append({"number": n, "label": label, "voice_id": vid, "ok": True})
@@ -492,6 +509,14 @@ def audition(site: Path, repo_root: Path) -> None:
             log(f"Audition {n} failed: {e}")
             results.append({"number": n, "label": label, "voice_id": vid, "ok": False, "error": str(e)[:300]})
         time.sleep(7)
+    try:
+        log("Pronunciation test")
+        pcm = gemini_chunk(PRONUNCIATION_TEST)
+        add_episode(site, repo_root, pcm, f"Audition {len(candidates) + 1} — How to say Iván (A, B, C, D)",
+                    "Pick the option that sounds right.", "audition", f"Gemini {GEMINI_VOICE}")
+        results.append({"number": len(candidates) + 1, "label": "pronunciation test", "ok": True})
+    except Exception as e:
+        log(f"Pronunciation test failed: {e}")
     (site / "auditions.json").write_text(json.dumps(results, indent=2, ensure_ascii=False))
     ok = sum(r["ok"] for r in results)
     log(f"Auditions published: {ok}/{len(results)}")
