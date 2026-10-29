@@ -110,7 +110,7 @@ def find_ready_page() -> dict | None:
         if not date:
             continue
         d = dt.date.fromisoformat(date["start"][:10])
-        if 0 <= (today - d).days <= 1:     # today's (or yesterday's, if late)
+        if d == today:                     # only today's script; old ones are never voiced
             return page
     return None
 
