@@ -46,12 +46,15 @@ GEMINI_MODEL = os.environ.get("GEMINI_TTS_MODEL") or "gemini-3.8-flash-tts"
 GEMINI_VOICE = os.environ.get("GEMINI_VOICE") or "Iapetus"
 GEMINI_STYLE = os.environ.get("GEMINI_STYLE") or ""  # Google advises testing with no style first
 EDGE_VOICE = os.environ.get("EDGE_VOICE") or "en-GB-RyanNeural"  # British backup voice
-MAX_CHUNK_WORDS = 1000         # ~6 minutes of speech per Gemini request (free tier = 10 requests/day)
+MAX_CHUNK_WORDS = 1200         # ~7 minutes of speech per Gemini request (free tier = 10 requests/day)
 PAUSE_BETWEEN_CHUNKS = 0.5     # seconds
 PAUSE_BETWEEN_SECTIONS = 1.2   # seconds
 SAMPLE_RATE = 24000
 KEEP_EPISODES = 14             # older MP3s are deleted to keep the site small
 PODCAST_TITLE = os.environ.get("PODCAST_TITLE") or "Iván's Morning Briefing"
+# Days when the automatic (scheduled) runs must NOT voice the script; only a manual
+# "Run workflow" does. Used on 30 Oct 2026 to wait for Gemini's daily reset + voice choice.
+HOLD_SCHEDULED_ON = {"2026-10-30"}
 # How the voice should say Iván's name. Empty = leave "Iván" as written.
 NAME_SPOKEN = os.environ.get("NAME_SPOKEN") or ""
 
@@ -504,11 +507,11 @@ def design_voice(name: str, prompt: str, existing: dict | None = None) -> str | 
 
 
 def audition(site: Path, repo_root: Path) -> None:
-    """~7 Gemini requests: pronunciation test + 4 library voices + 2 designed voices.
+    """~5 Gemini requests: pronunciation test + 2 library voices + 2 designed voices.
     Run it on a day with spare free quota (it resets around 08:00-09:00 Madrid)."""
     candidates: list[tuple[str, str, str]] = [
         ("How to say Iván (A, B, C, D)", GEMINI_VOICE, PRONUNCIATION_TEST)]
-    for v in list_library_voices()[:4]:
+    for v in list_library_voices()[:2]:
         vid = v.get("id") or v.get("display_name")
         label = v.get("display_name") or vid
         p = v.get("prompted") or {}
@@ -614,6 +617,11 @@ def main() -> None:
     args = ap.parse_args()
 
     if args.cmd == "check":
+        today = dt.datetime.now(MADRID).date().isoformat()
+        if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and today in HOLD_SCHEDULED_ON:
+            log(f"{today} is on hold: waiting for a manual run.")
+            gh_output(found="false")
+            return
         page = find_ready_page()
         log(f"Script waiting: {page_title(page)}" if page else "No script waiting.")
         gh_output(found="true" if page else "false")
