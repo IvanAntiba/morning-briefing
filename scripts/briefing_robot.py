@@ -45,8 +45,8 @@ NOTION_VERSION = "2022-06-28"
 GEMINI_MODEL = os.environ.get("GEMINI_TTS_MODEL") or "gemini-3.8-flash-tts"
 GEMINI_VOICE = os.environ.get("GEMINI_VOICE") or "Iapetus"
 GEMINI_STYLE = os.environ.get("GEMINI_STYLE") or ""  # Google advises testing with no style first
-EDGE_VOICE = os.environ.get("EDGE_VOICE") or "en-US-AndrewMultilingualNeural"
-MAX_CHUNK_WORDS = 600          # ~4 minutes of speech per Gemini request
+EDGE_VOICE = os.environ.get("EDGE_VOICE") or "en-GB-RyanNeural"  # British backup voice
+MAX_CHUNK_WORDS = 1000         # ~6 minutes of speech per Gemini request (free tier = 10 requests/day)
 PAUSE_BETWEEN_CHUNKS = 0.5     # seconds
 PAUSE_BETWEEN_SECTIONS = 1.2   # seconds
 SAMPLE_RATE = 24000
@@ -177,23 +177,27 @@ def clean_for_speech(text: str) -> str:
 
 
 def chunk_sections(sections: list[dict]) -> list[dict]:
-    """Split into Gemini-sized pieces, never mid-paragraph."""
-    chunks = []
+    """Pack paragraphs into as few Gemini requests as possible (never mid-paragraph).
+    Sections can share a request; the script's own transitions carry the breaks."""
+    chunks, buf, words = [], [], 0
     for s in sections:
-        buf, words = [], 0
-        for p in s["paragraphs"]:
+        for i, p in enumerate(s["paragraphs"]):
             n = len(p.split())
             if buf and words + n > MAX_CHUNK_WORDS:
                 chunks.append({"text": "\n\n".join(buf), "pause": PAUSE_BETWEEN_CHUNKS})
                 buf, words = [], 0
             buf.append(p)
             words += n
-        if buf:
-            chunks.append({"text": "\n\n".join(buf), "pause": PAUSE_BETWEEN_SECTIONS})
+    if buf:
+        chunks.append({"text": "\n\n".join(buf), "pause": PAUSE_BETWEEN_SECTIONS})
     return chunks
 
 
 # ---------------------------------------------------------------- voices
+class DailyQuotaUsed(RuntimeError):
+    """Gemini's free daily allowance is used up; retrying is pointless until it resets."""
+
+
 def post_with_retry(url: str, headers: dict, body: dict, tries: int = 4):
     wait = 20
     for attempt in range(1, tries + 1):
@@ -204,6 +208,8 @@ def post_with_retry(url: str, headers: dict, body: dict, tries: int = 4):
             r = None
         if r is not None and r.status_code not in (429, 500, 502, 503, 504):
             return r
+        if r is not None and r.status_code == 429 and re.search(r"per day|PerDay", r.text, re.I):
+            raise DailyQuotaUsed("Gemini daily free quota used up: " + r.text[:200])
         if r is not None:
             log(f"Gemini busy/limited ({r.status_code}): {r.text[:200]}")
         if attempt < tries:
@@ -471,7 +477,20 @@ def list_library_voices() -> list[dict]:
     return sorted(voices, key=score, reverse=True)
 
 
-def design_voice(name: str, prompt: str) -> str | None:
+def existing_designed_voices() -> dict:
+    r = requests.get("https://generativelanguage.googleapis.com/v1beta/voices", headers=gemini_headers(),
+                     params=[("type", "prompted"), ("page_size", "200")], timeout=60)
+    if not r.ok:
+        return {}
+    return {v.get("display_name"): v.get("id") for v in r.json().get("voices") or []
+            if v.get("type") == "prompted" and v.get("id")}
+
+
+def design_voice(name: str, prompt: str, existing: dict | None = None) -> str | None:
+    if existing and existing.get(f"Briefing — {name}"):
+        vid = existing[f"Briefing — {name}"]
+        log(f"Reusing designed voice '{name}': {vid}")
+        return vid
     body = {"store": True, "voice": {
         "type": "prompted", "model": GEMINI_MODEL, "display_name": f"Briefing — {name}",
         "gender": "male", "language_code": "en-GB", "prompted": {"input": prompt}}}
@@ -485,41 +504,45 @@ def design_voice(name: str, prompt: str) -> str | None:
 
 
 def audition(site: Path, repo_root: Path) -> None:
-    candidates: list[tuple[str, str]] = [(f"{GEMINI_VOICE} (current voice)", GEMINI_VOICE)]
+    """~7 Gemini requests: pronunciation test + 4 library voices + 2 designed voices.
+    Run it on a day with spare free quota (it resets around 08:00-09:00 Madrid)."""
+    candidates: list[tuple[str, str, str]] = [
+        ("How to say Iván (A, B, C, D)", GEMINI_VOICE, PRONUNCIATION_TEST)]
     for v in list_library_voices()[:4]:
         vid = v.get("id") or v.get("display_name")
         label = v.get("display_name") or vid
         p = v.get("prompted") or {}
         extra = ", ".join(x for x in (p.get("accent"), p.get("persona"), p.get("pitch")) if x)
-        candidates.append((f"{label} — library{(' · ' + extra) if extra else ''}", vid))
+        candidates.append((f"{label} — library{(' · ' + extra) if extra else ''}", vid, say_names(AUDITION_TEXT)))
+    existing = existing_designed_voices()
     for name, prompt in DESIGNED_VOICES:
-        vid = design_voice(name, prompt)
+        try:
+            vid = design_voice(name, prompt, existing)
+        except DailyQuotaUsed as e:
+            log(f"Voice design skipped: {e}")
+            vid = None
         if vid:
-            candidates.append((f"{name} — designed", vid))
+            candidates.append((f"{name} — designed", vid, say_names(AUDITION_TEXT)))
 
     results = []
-    for n, (label, vid) in enumerate(candidates, 1):
+    for n, (label, vid, text) in enumerate(candidates, 1):
         try:
             log(f"Audition {n}: {label} ({vid})")
-            pcm = gemini_chunk(say_names(AUDITION_TEXT), voice=vid)
+            pcm = gemini_chunk(text, voice=vid)
             add_episode(site, repo_root, pcm, f"Audition {n} — {label}",
                         f"Voice audition. Voice ID: {vid}", "audition", f"Gemini {vid}")
             results.append({"number": n, "label": label, "voice_id": vid, "ok": True})
+        except DailyQuotaUsed as e:
+            log(f"Stopping auditions: {e}")
+            results.append({"number": n, "label": label, "voice_id": vid, "ok": False, "error": "daily quota"})
+            break
         except Exception as e:
             log(f"Audition {n} failed: {e}")
             results.append({"number": n, "label": label, "voice_id": vid, "ok": False, "error": str(e)[:300]})
         time.sleep(7)
-    try:
-        log("Pronunciation test")
-        pcm = gemini_chunk(PRONUNCIATION_TEST)
-        add_episode(site, repo_root, pcm, f"Audition {len(candidates) + 1} — How to say Iván (A, B, C, D)",
-                    "Pick the option that sounds right.", "audition", f"Gemini {GEMINI_VOICE}")
-        results.append({"number": len(candidates) + 1, "label": "pronunciation test", "ok": True})
-    except Exception as e:
-        log(f"Pronunciation test failed: {e}")
     (site / "auditions.json").write_text(json.dumps(results, indent=2, ensure_ascii=False))
     ok = sum(r["ok"] for r in results)
-    log(f"Auditions published: {ok}/{len(results)}")
+    log(f"Auditions published: {ok}/{len(candidates)}")
     Path("result.json").write_text(json.dumps({"page_id": None}))
     gh_output(built="true" if ok else "false")
     if not ok:
