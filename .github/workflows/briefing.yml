@@ -1,0 +1,87 @@
+# The robot's daily routine.
+# GitHub wakes it every 15 minutes on weekday mornings (times below are UTC:
+# 04:00–07:45 UTC = 05:00–08:45 Madrid in winter, 06:00–09:45 in summer).
+# Most runs just check Notion, find nothing, and stop in ~20 seconds.
+# GitHub can start scheduled runs late, which is why it checks so often.
+
+name: Voice morning briefing
+
+on:
+  schedule:
+    - cron: "*/15 4-7 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "Make a 30-second test episode (ignores Notion)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: briefing
+  cancel-in-progress: false
+
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_TTS_MODEL: ${{ vars.GEMINI_TTS_MODEL }}
+      GEMINI_VOICE: ${{ vars.GEMINI_VOICE }}
+      GEMINI_STYLE: ${{ vars.GEMINI_STYLE }}
+      PAGES_URL: ${{ vars.PAGES_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install helpers
+        run: |
+          pip install -q -r requirements.txt
+          which ffmpeg || (sudo apt-get update -q && sudo apt-get install -y -q ffmpeg)
+
+      - name: Is a script waiting in Notion?
+        id: check
+        if: ${{ !inputs.test }}
+        run: python scripts/briefing_robot.py check
+
+      - name: Fetch the current podcast folder
+        if: ${{ inputs.test || steps.check.outputs.found == 'true' }}
+        run: |
+          git clone --quiet --depth 1 --branch pages \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" site \
+            || mkdir -p site
+          rm -rf site/.git
+
+      - name: Voice it and update the feed
+        id: build
+        if: ${{ inputs.test || steps.check.outputs.found == 'true' }}
+        run: python scripts/briefing_robot.py build --site site ${{ inputs.test && '--test' || '' }}
+
+      - name: Publish the podcast folder
+        if: ${{ steps.build.outputs.built == 'true' }}
+        working-directory: site
+        run: |
+          # One fresh commit each time, so the repo never piles up old audio.
+          git init --quiet -b pages
+          git config user.name "briefing-robot"
+          git config user.email "briefing-robot@users.noreply.github.com"
+          git add -A
+          git commit --quiet -m "Episode $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push --quiet --force \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" pages
+
+      - name: Tell Notion it's done
+        if: ${{ steps.build.outputs.built == 'true' }}
+        run: python scripts/briefing_robot.py mark
+
+      - name: Leave a note in Notion if something broke
+        if: ${{ failure() && !inputs.test }}
+        run: python scripts/briefing_robot.py note --message "Run failed — see GitHub Actions log ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
