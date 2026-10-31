@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Briefing — Sat 31 Oct 2026",
+    "file": "episodes/2026-10-31-104610-effaaf.mp3",
+    "guid": "briefing-20261031104610-3",
+    "pub_date": "Sat, 31 Oct 2026 10:46:10 +0100",
+    "created": "2026-10-31T10:46:10.539693+01:00",
+    "bytes": 10649325,
+    "seconds": 1331.08,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Fri 30 Oct 2026",
+    "file": "episodes/2026-10-30-092436-d4d747.mp3",
+    "guid": "briefing-20261030092436-2",
+    "pub_date": "Fri, 30 Oct 2026 09:24:36 +0100",
+    "created": "2026-10-30T09:24:36.487473+01:00",
+    "bytes": 9723501,
+    "seconds": 1215.36,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Weekday briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Thu 29 Oct 2026",
+    "file": "episodes/2026-10-29-193259.mp3",
+    "guid": "briefing-20261029193259",
+    "pub_date": "Thu, 29 Oct 2026 19:32:59 +0100",
+    "bytes": 6183021,
+    "seconds": 772.8,
+    "engine": "Gemini Iapetus",
+    "description": "Weekday briefing, 5 sections, voiced by Gemini Iapetus."
+  },
+  {
+    "title": "Test episode — Thu 29 Oct 2026 19:15",
+    "file": "episodes/2026-10-29-191548.mp3",
+    "guid": "briefing-20261029191548",
+    "pub_date": "Thu, 29 Oct 2026 19:15:48 +0100",
+    "bytes": 131181,
+    "seconds": 16.32,
+    "engine": "Gemini Iapetus",
+    "description": "Weekday briefing, 1 sections, voiced by Gemini Iapetus."
+  }
+]

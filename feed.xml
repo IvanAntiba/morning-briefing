@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Iván's Morning Briefing</title>
+    <link>https://ivanantiba.github.io/morning-briefing/</link>
+    <atom:link href="https://ivanantiba.github.io/morning-briefing/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>A private daily news briefing. Not listed in podcast directories.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 31 Oct 2026 09:46:17 +0000</lastBuildDate>
+    <itunes:author>Claude</itunes:author>
+    <itunes:image href="https://ivanantiba.github.io/morning-briefing/cover.png"/>
+    <itunes:category text="News"/>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:block>Yes</itunes:block>
+    <item>
+      <title>Briefing — Sat 31 Oct 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261031104610-3</guid>
+      <pubDate>Sat, 31 Oct 2026 10:46:10 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-10-31-104610-effaaf.mp3" length="10649325" type="audio/mpeg"/>
+      <itunes:duration>00:22:11</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Fri 30 Oct 2026</title>
+      <description>Weekday briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261030092436-2</guid>
+      <pubDate>Fri, 30 Oct 2026 09:24:36 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-10-30-092436-d4d747.mp3" length="9723501" type="audio/mpeg"/>
+      <itunes:duration>00:20:15</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Thu 29 Oct 2026</title>
+      <description>Weekday briefing, 5 sections, voiced by Gemini Iapetus.</description>
+      <guid isPermaLink="false">briefing-20261029193259</guid>
+      <pubDate>Thu, 29 Oct 2026 19:32:59 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-10-29-193259.mp3" length="6183021" type="audio/mpeg"/>
+      <itunes:duration>00:12:53</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Test episode — Thu 29 Oct 2026 19:15</title>
+      <description>Weekday briefing, 1 sections, voiced by Gemini Iapetus.</description>
+      <guid isPermaLink="false">briefing-20261029191548</guid>
+      <pubDate>Thu, 29 Oct 2026 19:15:48 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-10-29-191548.mp3" length="131181" type="audio/mpeg"/>
+      <itunes:duration>00:00:16</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>
