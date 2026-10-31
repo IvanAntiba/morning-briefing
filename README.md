@@ -1,6 +1,6 @@
 # Morning Briefing robot
 
-Turns the briefing script Claude writes in Notion each weekday into a podcast episode.
+Turns the briefing script Claude writes in Notion each morning (weekends included) into a podcast episode.
 
 **How it works, in one line:** Claude writes the script (≈6:15 Madrid) → this robot checks Notion every 15 minutes between 5:00 and 8:45 → voices it with Gemini (voice *Iapetus*; Microsoft Edge voice as backup) → publishes it to a podcast feed your phone is subscribed to.
 

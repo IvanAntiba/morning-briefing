@@ -1,5 +1,5 @@
 # The robot's daily routine.
-# GitHub wakes it every 15 minutes on weekday mornings (times below are UTC:
+# GitHub wakes it every 15 minutes on every morning, weekends included (times below are UTC:
 # 04:00–08:45 UTC = 05:00–09:45 Madrid in winter, 06:00–10:45 in summer).
 # Most runs just check Notion, find nothing, and stop in ~20 seconds.
 # GitHub can start scheduled runs late, which is why it checks so often.
@@ -8,7 +8,7 @@ name: Voice morning briefing
 
 on:
   schedule:
-    - cron: "*/15 4-8 * * 1-5"
+    - cron: "*/15 4-8 * * *"
   workflow_dispatch:
     inputs:
       test:

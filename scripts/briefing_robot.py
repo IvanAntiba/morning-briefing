@@ -3,7 +3,7 @@
 Morning briefing robot.
 
 In plain words: this script is the "voice studio". GitHub runs it every
-15 minutes on weekday mornings. Each time it:
+15 minutes on every morning (weekends included). Each time it:
   1. asks Notion "is there a briefing script marked 'Script ready'?"
   2. if yes, reads the script, sends it section by section to Gemini's
      text-to-speech (voice: Iapetus) and stitches the pieces into one MP3
@@ -392,7 +392,7 @@ def write_feed(site: Path, episodes: list[dict]) -> None:
     <title>{html.escape(PODCAST_TITLE, quote=False)}</title>
     <link>{base}</link>
     <atom:link href="{base}feed.xml" rel="self" type="application/rss+xml"/>
-    <description>A private weekday news briefing. Not listed in podcast directories.</description>
+    <description>A private daily news briefing. Not listed in podcast directories.</description>
     <language>en</language>
     <lastBuildDate>{now}</lastBuildDate>
     <itunes:author>Claude</itunes:author>
@@ -593,7 +593,7 @@ def build(site: Path, test: bool, repo_root: Path) -> None:
     pcm, engine = voice_all(chunks)
     file, seconds = add_episode(
         site, repo_root, pcm, title,
-        f"Weekday briefing, {len(sections)} sections, voiced by {engine}.",
+        f"Morning briefing, {len(sections)} sections, voiced by {engine}.",
         "test" if test else "briefing", engine)
 
     result = {"page_id": page["id"] if page else None, "url": site_url() + file,
