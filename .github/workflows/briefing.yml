@@ -2,13 +2,16 @@
 # GitHub wakes it every 15 minutes on every morning, weekends included (times below are UTC:
 # 04:00–08:45 UTC = 05:00–09:45 Madrid in winter, 06:00–10:45 in summer).
 # Most runs just check Notion, find nothing, and stop in ~20 seconds.
-# GitHub can start scheduled runs late, which is why it checks so often.
+# GitHub can start scheduled runs late (or skip them), which is why it checks so often.
+# Minutes are deliberately odd (:07/:22/:37/:52): :00/:15/:30/:45 are GitHub's busiest
+# slots and the first it drops. Backup: a Claude scheduled task ("Briefing starter")
+# presses "Run workflow" each morning, so the robot no longer depends on this timer alone.
 
 name: Voice morning briefing
 
 on:
   schedule:
-    - cron: "*/15 4-8 * * *"
+    - cron: "7,22,37,52 4-8 * * *"
   workflow_dispatch:
     inputs:
       test:
