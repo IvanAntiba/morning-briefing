@@ -38,4 +38,4 @@ Claude's scheduled task *Sensei writer* writes the lesson into the Notion **Less
 
 Feed address: `https://ivanantiba.github.io/morning-briefing/sensei/feed.xml`
 The robot's Notion connection ("Briefing robot") must be added to the Sensei page in Notion. Sensei steps never fail the run, so a Sensei problem can't stop the briefing.
-Optional variables: `SENSEI_DATABASE_ID`, `SENSEI_VOICE_ES`, `SENSEI_VOICE_JA`, `SENSEI_RATE_ES` (default -5%), `SENSEI_RATE_JA` (default -15%).
+Optional variables: `SENSEI_DATABASE_ID`, `SENSEI_VOICE_ES`, `SENSEI_VOICE_JA`, `SENSEI_RATE_ES` (default +5%), `SENSEI_RATE_JA` (default -15%).

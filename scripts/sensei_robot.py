@@ -45,7 +45,7 @@ from briefing_robot import (  # noqa: E402
 SENSEI_DATABASE_ID = os.environ.get("SENSEI_DATABASE_ID") or "a349812ef7744b609a56f8c5d6aba9bf"
 VOICE_ES = os.environ.get("SENSEI_VOICE_ES") or "es-ES-AlvaroNeural"   # the sensei, Castilian Spanish
 VOICE_JA = os.environ.get("SENSEI_VOICE_JA") or "ja-JP-NanamiNeural"   # native Japanese
-RATE_ES = os.environ.get("SENSEI_RATE_ES") or "-5%"
+RATE_ES = os.environ.get("SENSEI_RATE_ES") or "+5%"   # Iván, 1 Nov: Álvaro kept, faster (audition sample 1)
 RATE_JA = os.environ.get("SENSEI_RATE_JA") or "-15%"                   # slower, for a beginner
 GAP_SEGMENT = 0.25      # seconds between tagged pieces inside a paragraph
 GAP_PARAGRAPH = 0.7
