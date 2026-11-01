@@ -27,8 +27,8 @@ The feed is public but hidden from podcast directories (`itunes:block`). The aud
 
 ## Sensei (Japanese lessons)
 
-The same routine also voices **Sensei**, a ~13-minute Japanese lesson for weekday walks to the office.
-Claude's scheduled task *Sensei writer* writes the lesson into the Notion **Lessons** database (under Jarvis → Sensei) at 05:50 Madrid on weekdays. On its next run, this robot voices it with two free Microsoft Edge voices: Álvaro (Castilian Spanish, the sensei) and Nanami (Japanese). It uses no Gemini quota.
+The same routine also voices **Sensei**, a ~13-minute Japanese lesson every day (weekdays: the walk to the office).
+Claude's scheduled task *Sensei writer* writes the lesson into the Notion **Lessons** database (under Jarvis → Sensei) at 05:50 Madrid every day. On its next run, this robot voices it with two free Microsoft Edge voices: Álvaro (Castilian Spanish, the sensei) and Nanami (Japanese). It uses no Gemini quota.
 
 | Piece | What it is |
 |---|---|
