@@ -3,3 +3,5 @@ __pycache__/
 site/
 result.json
 edge_chunk.mp3
+sensei_result.json
+sensei_piece_*.mp3

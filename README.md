@@ -24,3 +24,18 @@ Actions tab → *Voice morning briefing* → *Run workflow* → tick **test** �
 `https://<your-github-username>.github.io/<repo-name>/feed.xml`
 
 The feed is public but hidden from podcast directories (`itunes:block`). The audio never names meetings, people or tasks — those stay in the private Notion text version.
+
+## Sensei (Japanese lessons)
+
+The same routine also voices **Sensei**, a ~13-minute Japanese lesson for weekday walks to the office.
+Claude's scheduled task *Sensei writer* writes the lesson into the Notion **Lessons** database (under Jarvis → Sensei) at 05:50 Madrid on weekdays. On its next run, this robot voices it with two free Microsoft Edge voices: Álvaro (Castilian Spanish, the sensei) and Nanami (Japanese). It uses no Gemini quota.
+
+| Piece | What it is |
+|---|---|
+| `scripts/sensei_robot.py` | Reads the lesson, voices `[ES]` / `[JA]` / `[PAUSA n]` tags, updates the Sensei feed |
+| `assets/sensei-cover.png` | Sensei cover art |
+| `sensei/` folder on `pages` | The published Sensei podcast (feed + last 40 lessons) |
+
+Feed address: `https://ivanantiba.github.io/morning-briefing/sensei/feed.xml`
+The robot's Notion connection ("Briefing robot") must be added to the Sensei page in Notion. Sensei steps never fail the run, so a Sensei problem can't stop the briefing.
+Optional variables: `SENSEI_DATABASE_ID`, `SENSEI_VOICE_ES`, `SENSEI_VOICE_JA`, `SENSEI_RATE_ES` (default -5%), `SENSEI_RATE_JA` (default -15%).
