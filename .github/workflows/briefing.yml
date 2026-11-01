@@ -23,6 +23,10 @@ on:
         description: "Voice audition: publish short samples of candidate voices"
         type: boolean
         default: false
+      sensei_audition:
+        description: "Sensei voice audition: publish short samples of candidate Spanish voices to the Sensei feed"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -57,18 +61,18 @@ jobs:
 
       - name: Is a script waiting in Notion?
         id: check
-        if: ${{ !inputs.test && !inputs.audition }}
+        if: ${{ !inputs.test && !inputs.audition && !inputs.sensei_audition }}
         run: python scripts/briefing_robot.py check
 
       # Sensei (Japanese lessons) rides along in the same routine. Its steps never fail the run,
       # so a Sensei problem can't stop the briefing from being published.
       - name: Is a Sensei lesson waiting in Notion?
         id: sensei_check
-        if: ${{ !inputs.test && !inputs.audition }}
+        if: ${{ !inputs.test && !inputs.audition && !inputs.sensei_audition }}
         run: python scripts/sensei_robot.py check
 
       - name: Fetch the current podcast folder
-        if: ${{ inputs.test || inputs.audition || steps.check.outputs.found == 'true' || steps.sensei_check.outputs.found == 'true' }}
+        if: ${{ inputs.test || inputs.audition || inputs.sensei_audition || steps.check.outputs.found == 'true' || steps.sensei_check.outputs.found == 'true' }}
         run: |
           git clone --quiet --depth 1 --branch pages \
             "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" site \
@@ -86,8 +90,13 @@ jobs:
         continue-on-error: true
         run: python scripts/sensei_robot.py build --site site
 
+      - name: Sensei voice audition
+        id: sensei_audition
+        if: ${{ inputs.sensei_audition }}
+        run: python scripts/sensei_robot.py audition --site site
+
       - name: Publish the podcast folder
-        if: ${{ steps.build.outputs.built == 'true' || steps.sensei_build.outputs.built == 'true' }}
+        if: ${{ steps.build.outputs.built == 'true' || steps.sensei_build.outputs.built == 'true' || steps.sensei_audition.outputs.built == 'true' }}
         working-directory: site
         run: |
           # One fresh commit each time, so the repo never piles up old audio.
@@ -113,5 +122,5 @@ jobs:
         run: python scripts/sensei_robot.py note --message "Voicing failed — see GitHub Actions log ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
 
       - name: Leave a note in Notion if something broke
-        if: ${{ failure() && !inputs.test && !inputs.audition }}
+        if: ${{ failure() && !inputs.test && !inputs.audition && !inputs.sensei_audition }}
         run: python scripts/briefing_robot.py note --message "Run failed — see GitHub Actions log ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true

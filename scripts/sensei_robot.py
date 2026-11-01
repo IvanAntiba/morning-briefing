@@ -214,16 +214,27 @@ def write_feed(folder: Path, episodes: list[dict]) -> None:
     (folder / "feed.xml").write_text(feed, encoding="utf-8")
 
 
-def add_episode(site: Path, repo_root: Path, pcm: bytes, title: str, description: str) -> tuple[str, float]:
+def add_episode(site: Path, repo_root: Path, pcm: bytes, title: str, description: str,
+                kind: str = "lesson") -> tuple[str, float]:
     folder = site / FEED_DIR
     stamp = dt.datetime.now(MADRID)
     file = f"episodes/{stamp:%Y-%m-%d-%H%M%S}-{secrets.token_hex(3)}.mp3"
     seconds = write_mp3(pcm, folder / file)
     store = folder / "episodes.json"
     episodes = json.loads(store.read_text()) if store.exists() else []
+    if kind == "lesson":
+        # Voice auditions only stay in the feed for 2 days after they were made.
+        cutoff = stamp - dt.timedelta(days=2)
+        keep = []
+        for e in episodes:
+            if e.get("kind") == "audition" and dt.datetime.fromisoformat(e["created"]) < cutoff:
+                (folder / e["file"]).unlink(missing_ok=True)
+            else:
+                keep.append(e)
+        episodes = keep
     episodes.insert(0, {
-        "title": title, "file": file, "guid": f"sensei-{stamp:%Y%m%d%H%M%S}-{len(episodes)}",
-        "pub_date": format_datetime(stamp), "created": stamp.isoformat(),
+        "title": title, "file": file, "guid": f"sensei-{kind}-{stamp:%Y%m%d%H%M%S}-{len(episodes)}",
+        "pub_date": format_datetime(stamp), "created": stamp.isoformat(), "kind": kind,
         "bytes": (folder / file).stat().st_size, "seconds": seconds, "description": description,
     })
     for old in episodes[KEEP_EPISODES:]:
@@ -236,6 +247,47 @@ def add_episode(site: Path, repo_root: Path, pcm: bytes, title: str, description
     write_feed(folder, episodes)
     (site / ".nojekyll").touch()
     return file, seconds
+
+
+# ---------------------------------------------------------------- voice audition
+AUDITION_ES_1 = ("Hola, Iván. Aquí tu clase de japonés de cada día. Vamos con una frase que vas a usar "
+                 "muchísimo en Japón: en tiendas, en restaurantes y en el tren. Escucha y repite.")
+AUDITION_JA = "ありがとうございます"
+AUDITION_ES_2 = ("Significa muchas gracias, en forma educada. Si se lo dices a un amigo, basta con la versión corta. "
+                 "Vale, ¿lo tienes? Muy bien. Mañana, más.")
+# (label, voice, rate). The first three are the only Castilian Spanish voices Edge offers;
+# the "Multilingual" ones are Microsoft's newest, most natural voices, which also speak Spanish.
+AUDITION_VOICES = [
+    ("Álvaro, España (el actual, más rápido)", "es-ES-AlvaroNeural", "+5%"),
+    ("Ximena, España", "es-ES-XimenaNeural", "+0%"),
+    ("Elvira, España", "es-ES-ElviraNeural", "+0%"),
+    ("Andrew, multilingüe", "en-US-AndrewMultilingualNeural", "+0%"),
+    ("Brian, multilingüe", "en-US-BrianMultilingualNeural", "+0%"),
+    ("Emma, multilingüe", "en-US-EmmaMultilingualNeural", "+0%"),
+    ("Ava, multilingüe", "en-US-AvaMultilingualNeural", "+0%"),
+]
+
+
+def audition(site: Path, repo_root: Path) -> None:
+    """Publish one short sample per candidate Spanish voice into the Sensei feed."""
+    global VOICE_ES, RATE_ES
+    ok = 0
+    for n, (label, voice, rate) in enumerate(AUDITION_VOICES, 1):
+        VOICE_ES, RATE_ES = voice, rate
+        _cache.clear()
+        try:
+            pcm = (edge_say(AUDITION_ES_1, "es") + silence(0.4) + edge_say(AUDITION_JA, "ja") + silence(2.5)
+                   + edge_say(AUDITION_JA, "ja") + silence(1.0) + edge_say(AUDITION_ES_2, "es"))
+            add_episode(site, repo_root, pcm, f"Prueba de voz {n} — {label}",
+                        f"Prueba de voz para el sensei: {voice} ({rate}).", kind="audition")
+            log(f"Audition {n}: {voice} OK")
+            ok += 1
+        except Exception as e:
+            log(f"Audition {n}: {voice} failed: {e}")
+    log(f"Auditions published: {ok}/{len(AUDITION_VOICES)}")
+    gh_output(built="true" if ok else "false")
+    if not ok:
+        raise RuntimeError("No audition could be voiced.")
 
 
 # ---------------------------------------------------------------- commands
@@ -285,6 +337,7 @@ def main() -> None:
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("check")
     b = sub.add_parser("build"); b.add_argument("--site", required=True)
+    a = sub.add_parser("audition"); a.add_argument("--site", required=True)
     sub.add_parser("mark")
     n = sub.add_parser("note"); n.add_argument("--message", required=True)
     args = ap.parse_args()
@@ -301,6 +354,8 @@ def main() -> None:
         gh_output(found="true" if page else "false")
     elif args.cmd == "build":
         build(Path(args.site), Path(__file__).resolve().parent.parent)
+    elif args.cmd == "audition":
+        audition(Path(args.site), Path(__file__).resolve().parent.parent)
     elif args.cmd == "mark":
         mark()
     elif args.cmd == "note":
