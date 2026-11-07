@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sensei</title>
+    <link>https://ivanantiba.github.io/morning-briefing/sensei/</link>
+    <atom:link href="https://ivanantiba.github.io/morning-briefing/sensei/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Lecciones privadas de japonés para el camino a la oficina. No aparece en los directorios de podcasts.</description>
+    <language>es</language>
+    <lastBuildDate>Sat, 07 Nov 2026 05:48:53 +0000</lastBuildDate>
+    <itunes:author>Claude</itunes:author>
+    <itunes:image href="https://ivanantiba.github.io/morning-briefing/sensei/cover.png"/>
+    <itunes:category text="Education"><itunes:category text="Language Learning"/></itunes:category>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:block>Yes</itunes:block>
+    <item>
+      <title>Lección 8 — Por favor</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261107064850-10</guid>
+      <pubDate>Sat, 07 Nov 2026 06:48:50 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-07-064850-fc195a.mp3" length="6119085" type="audio/mpeg"/>
+      <itunes:duration>00:12:45</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 7 — Números del 11 al 100</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261106064929-9</guid>
+      <pubDate>Fri, 06 Nov 2026 06:49:29 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-06-064929-1d2631.mp3" length="6485037" type="audio/mpeg"/>
+      <itunes:duration>00:13:31</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 6 — Números del 1 al 10</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261105145319-8</guid>
+      <pubDate>Thu, 05 Nov 2026 14:53:19 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-05-145319-dcd6e9.mp3" length="6084333" type="audio/mpeg"/>
+      <itunes:duration>00:12:40</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 5 — Presentarse</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261105144911-7</guid>
+      <pubDate>Thu, 05 Nov 2026 14:49:11 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-05-144911-a50612.mp3" length="5908269" type="audio/mpeg"/>
+      <itunes:duration>00:12:18</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 4 — Sí, no, vale</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261105144331-6</guid>
+      <pubDate>Thu, 05 Nov 2026 14:43:31 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-05-144331-939677.mp3" length="5491245" type="audio/mpeg"/>
+      <itunes:duration>00:11:26</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Repaso — Un día en Japón</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261105064954-5</guid>
+      <pubDate>Thu, 05 Nov 2026 06:49:54 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-05-064954-2a1f94.mp3" length="6014829" type="audio/mpeg"/>
+      <itunes:duration>00:12:32</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Repaso — Parejas, tono y ritmo</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261104064836-4</guid>
+      <pubDate>Wed, 04 Nov 2026 06:48:36 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-04-064836-f55944.mp3" length="6379437" type="audio/mpeg"/>
+      <itunes:duration>00:13:17</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Repaso — Gracias, perdón y sonidos</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261103090218-3</guid>
+      <pubDate>Tue, 03 Nov 2026 09:02:18 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-03-090218-6895a7.mp3" length="6206829" type="audio/mpeg"/>
+      <itunes:duration>00:12:56</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 3 — Los sonidos del japonés</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261102064845-9</guid>
+      <pubDate>Mon, 02 Nov 2026 06:48:45 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-02-064845-4b5007.mp3" length="6019821" type="audio/mpeg"/>
+      <itunes:duration>00:12:32</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 2 — Gracias y perdón</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-lesson-20261101125208-8</guid>
+      <pubDate>Sun, 01 Nov 2026 12:52:08 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-01-125208-f4aa06.mp3" length="5790573" type="audio/mpeg"/>
+      <itunes:duration>00:12:04</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lección 1 — Saludos</title>
+      <description>Sensei · voces: Álvaro (español) y Nanami (japonés).</description>
+      <guid isPermaLink="false">sensei-20261101025529-0</guid>
+      <pubDate>Sun, 01 Nov 2026 02:55:29 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/sensei/episodes/2026-11-01-025529-132375.mp3" length="5815149" type="audio/mpeg"/>
+      <itunes:duration>00:12:07</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>

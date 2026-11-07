@@ -1,0 +1,130 @@
+[
+  {
+    "title": "Briefing — Sat 07 Nov 2026",
+    "file": "episodes/2026-11-07-064709-aa9972.mp3",
+    "guid": "briefing-20261107064709-10",
+    "pub_date": "Sat, 07 Nov 2026 06:47:09 +0100",
+    "created": "2026-11-07T06:47:09.393206+01:00",
+    "bytes": 10221741,
+    "seconds": 1277.64,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Fri 06 Nov 2026",
+    "file": "episodes/2026-11-06-064710-286b11.mp3",
+    "guid": "briefing-20261106064710-9",
+    "pub_date": "Fri, 06 Nov 2026 06:47:10 +0100",
+    "created": "2026-11-06T06:47:10.661980+01:00",
+    "bytes": 9980205,
+    "seconds": 1247.44,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Thu 05 Nov 2026",
+    "file": "episodes/2026-11-05-064743-894a6f.mp3",
+    "guid": "briefing-20261105064743-8",
+    "pub_date": "Thu, 05 Nov 2026 06:47:43 +0100",
+    "created": "2026-11-05T06:47:43.066328+01:00",
+    "bytes": 10348269,
+    "seconds": 1293.44,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Wed 04 Nov 2026",
+    "file": "episodes/2026-11-04-064709-bbfddd.mp3",
+    "guid": "briefing-20261104064709-7",
+    "pub_date": "Wed, 04 Nov 2026 06:47:09 +0100",
+    "created": "2026-11-04T06:47:09.453311+01:00",
+    "bytes": 9969261,
+    "seconds": 1246.06,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Tue 03 Nov 2026",
+    "file": "episodes/2026-11-03-092257-906ae2.mp3",
+    "guid": "briefing-20261103092257-6",
+    "pub_date": "Tue, 03 Nov 2026 09:22:57 +0100",
+    "created": "2026-11-03T09:22:57.356775+01:00",
+    "bytes": 10423341,
+    "seconds": 1302.84,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Mon 02 Nov 2026",
+    "file": "episodes/2026-11-02-064707-cb3610.mp3",
+    "guid": "briefing-20261102064707-5",
+    "pub_date": "Mon, 02 Nov 2026 06:47:07 +0100",
+    "created": "2026-11-02T06:47:07.806443+01:00",
+    "bytes": 10425069,
+    "seconds": 1303.04,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Sun 01 Nov 2026",
+    "file": "episodes/2026-11-01-064705-b283c8.mp3",
+    "guid": "briefing-20261101064705-4",
+    "pub_date": "Sun, 01 Nov 2026 06:47:05 +0100",
+    "created": "2026-11-01T06:47:05.447195+01:00",
+    "bytes": 10038189,
+    "seconds": 1254.68,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Sat 31 Oct 2026",
+    "file": "episodes/2026-10-31-104610-effaaf.mp3",
+    "guid": "briefing-20261031104610-3",
+    "pub_date": "Sat, 31 Oct 2026 10:46:10 +0100",
+    "created": "2026-10-31T10:46:10.539693+01:00",
+    "bytes": 10649325,
+    "seconds": 1331.08,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Fri 30 Oct 2026",
+    "file": "episodes/2026-10-30-092436-d4d747.mp3",
+    "guid": "briefing-20261030092436-2",
+    "pub_date": "Fri, 30 Oct 2026 09:24:36 +0100",
+    "created": "2026-10-30T09:24:36.487473+01:00",
+    "bytes": 9723501,
+    "seconds": 1215.36,
+    "engine": "Gemini Butler, Received Pronunciation (designed)",
+    "kind": "briefing",
+    "description": "Weekday briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed)."
+  },
+  {
+    "title": "Briefing — Thu 29 Oct 2026",
+    "file": "episodes/2026-10-29-193259.mp3",
+    "guid": "briefing-20261029193259",
+    "pub_date": "Thu, 29 Oct 2026 19:32:59 +0100",
+    "bytes": 6183021,
+    "seconds": 772.8,
+    "engine": "Gemini Iapetus",
+    "description": "Weekday briefing, 5 sections, voiced by Gemini Iapetus."
+  },
+  {
+    "title": "Test episode — Thu 29 Oct 2026 19:15",
+    "file": "episodes/2026-10-29-191548.mp3",
+    "guid": "briefing-20261029191548",
+    "pub_date": "Thu, 29 Oct 2026 19:15:48 +0100",
+    "bytes": 131181,
+    "seconds": 16.32,
+    "engine": "Gemini Iapetus",
+    "description": "Weekday briefing, 1 sections, voiced by Gemini Iapetus."
+  }
+]
