@@ -117,6 +117,16 @@ jobs:
         continue-on-error: true
         run: python scripts/sensei_robot.py mark
 
+      # GitHub's own "pages build and deployment" can time out (it did on 10 Nov 2026), leaving the
+      # episode in the `pages` branch but not on the public feed. This waits until the live feeds show
+      # what we just pushed; if not, it pushes an empty commit to start a fresh deployment (up to 2x),
+      # and finally leaves a note on today's Briefings row if it still isn't live.
+      - name: Check the new episode is live (republish if not)
+        if: ${{ steps.build.outputs.built == 'true' || steps.sensei_build.outputs.built == 'true' || steps.sensei_audition.outputs.built == 'true' }}
+        env:
+          PUSH_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: python scripts/verify_pages.py --site site --wait 300 --retries 2
+
       - name: Leave a note on the Sensei lesson if it broke
         if: ${{ always() && steps.sensei_build.outcome == 'failure' }}
         run: python scripts/sensei_robot.py note --message "Voicing failed — see GitHub Actions log ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
