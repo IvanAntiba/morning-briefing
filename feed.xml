@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Iván's Morning Briefing</title>
+    <link>https://ivanantiba.github.io/morning-briefing/</link>
+    <atom:link href="https://ivanantiba.github.io/morning-briefing/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>A private daily news briefing. Not listed in podcast directories.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 14 Nov 2026 05:47:58 +0000</lastBuildDate>
+    <itunes:author>Claude</itunes:author>
+    <itunes:image href="https://ivanantiba.github.io/morning-briefing/cover.png"/>
+    <itunes:category text="News"/>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:block>Yes</itunes:block>
+    <item>
+      <title>Briefing — Sat 14 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261114064755-14</guid>
+      <pubDate>Sat, 14 Nov 2026 06:47:55 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-14-064755-1dea40.mp3" length="9843500" type="audio/mpeg"/>
+      <itunes:duration>00:20:30</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Fri 13 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261113064745-14</guid>
+      <pubDate>Fri, 13 Nov 2026 06:47:45 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-13-064745-7b6686.mp3" length="9966188" type="audio/mpeg"/>
+      <itunes:duration>00:20:46</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Thu 12 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261112064849-14</guid>
+      <pubDate>Thu, 12 Nov 2026 06:48:49 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-12-064849-ffd5a6.mp3" length="9738860" type="audio/mpeg"/>
+      <itunes:duration>00:20:17</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Wed 11 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261111064756-14</guid>
+      <pubDate>Wed, 11 Nov 2026 06:47:56 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-11-064756-33bae0.mp3" length="10076780" type="audio/mpeg"/>
+      <itunes:duration>00:21:00</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Tue 10 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261110091840-13</guid>
+      <pubDate>Tue, 10 Nov 2026 09:18:40 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-10-091840-c6c3d5.mp3" length="9780525" type="audio/mpeg"/>
+      <itunes:duration>00:20:22</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Mon 09 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261109064735-12</guid>
+      <pubDate>Mon, 09 Nov 2026 06:47:35 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-09-064735-9f67da.mp3" length="9831597" type="audio/mpeg"/>
+      <itunes:duration>00:20:29</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Sun 08 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261108064731-11</guid>
+      <pubDate>Sun, 08 Nov 2026 06:47:31 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-08-064731-e79cc5.mp3" length="9645357" type="audio/mpeg"/>
+      <itunes:duration>00:20:06</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Sat 07 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261107064709-10</guid>
+      <pubDate>Sat, 07 Nov 2026 06:47:09 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-07-064709-aa9972.mp3" length="10221741" type="audio/mpeg"/>
+      <itunes:duration>00:21:18</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Fri 06 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261106064710-9</guid>
+      <pubDate>Fri, 06 Nov 2026 06:47:10 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-06-064710-286b11.mp3" length="9980205" type="audio/mpeg"/>
+      <itunes:duration>00:20:47</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Thu 05 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261105064743-8</guid>
+      <pubDate>Thu, 05 Nov 2026 06:47:43 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-05-064743-894a6f.mp3" length="10348269" type="audio/mpeg"/>
+      <itunes:duration>00:21:33</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Wed 04 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261104064709-7</guid>
+      <pubDate>Wed, 04 Nov 2026 06:47:09 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-04-064709-bbfddd.mp3" length="9969261" type="audio/mpeg"/>
+      <itunes:duration>00:20:46</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Tue 03 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261103092257-6</guid>
+      <pubDate>Tue, 03 Nov 2026 09:22:57 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-03-092257-906ae2.mp3" length="10423341" type="audio/mpeg"/>
+      <itunes:duration>00:21:43</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Mon 02 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261102064707-5</guid>
+      <pubDate>Mon, 02 Nov 2026 06:47:07 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-02-064707-cb3610.mp3" length="10425069" type="audio/mpeg"/>
+      <itunes:duration>00:21:43</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Briefing — Sun 01 Nov 2026</title>
+      <description>Morning briefing, 5 sections, voiced by Gemini Butler, Received Pronunciation (designed).</description>
+      <guid isPermaLink="false">briefing-20261101064705-4</guid>
+      <pubDate>Sun, 01 Nov 2026 06:47:05 +0100</pubDate>
+      <enclosure url="https://ivanantiba.github.io/morning-briefing/episodes/2026-11-01-064705-b283c8.mp3" length="10038189" type="audio/mpeg"/>
+      <itunes:duration>00:20:55</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>
